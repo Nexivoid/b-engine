@@ -55,6 +55,14 @@ function detectEngine() {
     let text = "";
 
     let isBlink = false;
+    let isLibWeb = false;
+
+    // Ladybird uses LibWeb and identifies itself with the Ladybird token.
+    // Check this before Chromium/Blink because the LibWeb UA also contains
+    // Chrome and Safari compatibility tokens.
+    if (ua.includes("Ladybird")) {
+        isLibWeb = true;
+    }
 
     if (navigator.userAgentData && navigator.userAgentData.brands) {
         const brands = navigator.userAgentData.brands.map(b => b.brand);
@@ -77,7 +85,10 @@ function detectEngine() {
         isBlink = true;
     }
 
-    if (isBlink) {
+    if (isLibWeb) {
+        engine = "libweb";
+        text = 'Your browser is <span class="engine-highlight">LibWeb</span> based.';
+    } else if (isBlink) {
         engine = "blink";
         text = 'Your browser is <span class="engine-highlight">Blink</span> based.';
     } else if (ua.includes("Chrome") || ua.includes("Chromium")) {
