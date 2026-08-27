@@ -57,9 +57,6 @@ function detectEngine() {
     let isBlink = false;
     let isLibWeb = false;
 
-    // Ladybird uses LibWeb and identifies itself with the Ladybird token.
-    // Check this before Chromium/Blink because the LibWeb UA also contains
-    // Chrome and Safari compatibility tokens.
     if (ua.includes("Ladybird")) {
         isLibWeb = true;
     }
